@@ -1,9 +1,0 @@
-content:
-- Theory
-- Merging date-time instances
-- Add 11 hours and print the date
-- Subtracting hours and adding minutes
-- Add days and subtract hours
-- The passed hours since the beginning of year
-- Adding N minutes
-- Whole hours between two date-time pairs
