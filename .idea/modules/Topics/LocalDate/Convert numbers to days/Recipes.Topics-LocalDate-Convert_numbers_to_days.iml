@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-LocalDate-Convert_numbers_to_days" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/LocalDate/Convert numbers to days" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Recipes" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/LocalDate/Convert numbers to days">
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalDate/Convert numbers to days/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalDate/Convert numbers to days/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalDate/Convert numbers to days/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

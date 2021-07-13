@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.16/6dc192c7f93ec1853f70d59d8a6dcf94eb42866/lombok-1.18.16.jar" />
+        </processorPath>
+        <module name="Recipes.Topics-LocalDateTime-Add_11_hours_and_print_the_date.test" />
+        <module name="Recipes.Topics-LocalDateTime-Subtracting_hours_and_adding_minutes.test" />
+        <module name="Recipes.Topics-LocalDateTime-Merging_date-time_instances.test" />
+        <module name="Recipes.Topics-LocalDateTime-Adding_N_minutes.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-The_first_index_of_a_sublist.main" />
+        <module name="Recipes.Topics-LocalTime-Theory.test" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Frequency_of_characters.test" />
+        <module name="Recipes.Topics-LocalDateTime-Whole_hours_between_two_date-time_pairs.test" />
+        <module name="Recipes.Topics-Comparing_dates_and_time-Theory.main" />
+        <module name="Recipes.Topics-LocalDate-The_first_and_the_last_day_of_a_month.test" />
+        <module name="Recipes.Topics-LocalDateTime-Theory.test" />
+        <module name="Recipes.Topics-LocalTime-Seconds_since_start_of_a_day.main" />
+        <module name="Recipes.Topics-LocalDate-Convert_numbers_to_days.main" />
+        <module name="Recipes.Topics-LocalTime-Some_hours_and_minutes_ago.test" />
+        <module name="Recipes.Topics-LocalTime-Return_time_without_seconds.test" />
+        <module name="Recipes.util.main" />
+        <module name="Recipes.Topics-LocalTime-Seconds_since_start_of_a_day.test" />
+        <module name="Recipes.Topics-LocalDateTime-Whole_hours_between_two_date-time_pairs.main" />
+        <module name="Recipes.Topics-LocalTime-Theory.main" />
+        <module name="Recipes.Topics-LocalDateTime-Add_days_and_subtract_hours.test" />
+        <module name="Recipes.Topics-Comparing_dates_and_time-Don't_be_late_again.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Theory.main" />
+        <module name="Recipes.Topics-LocalDateTime-The_passed_hours_since_the_beginning_of_year.test" />
+        <module name="Recipes.Topics-Comparing_dates_and_time-Don't_be_late_again.test" />
+        <module name="Recipes.Topics-LocalDate-The_first_day_of_a_month_or_not.test" />
+        <module name="Recipes.Topics-LocalDate-Theory.main" />
+        <module name="Recipes.Topics-LocalTime-Some_hours_and_minutes_ago.main" />
+        <module name="Recipes.Topics-LocalDateTime-Adding_N_minutes.test" />
+        <module name="Recipes.util.test" />
+        <module name="Recipes.Topics-LocalDate-The_first_and_the_last_day_of_a_month.main" />
+        <module name="Recipes.Topics-LocalDateTime-Theory.main" />
+        <module name="Recipes.Topics-LocalDate-10_days_before.test" />
+        <module name="Recipes.Topics-LocalDate-Theory.test" />
+        <module name="Recipes.Topics-LocalDate-Convert_numbers_to_days.test" />
+        <module name="Recipes.Topics-Comparing_dates_and_time-Theory.test" />
+        <module name="Recipes.Topics-LocalDate-The_first_day_of_a_month_or_not.main" />
+        <module name="Recipes.Topics-LocalDateTime-Add_days_and_subtract_hours.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-The_first_index_of_a_sublist.test" />
+        <module name="Recipes.Topics-LocalDateTime-Merging_date-time_instances.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Multiple_swaps.test" />
+        <module name="Recipes.Topics-LocalDateTime-Add_11_hours_and_print_the_date.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Sorting_sequences.test" />
+        <module name="Recipes.Topics-LocalDate-10_days_before.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Multiple_swaps.main" />
+        <module name="Recipes.Topics-LocalDateTime-The_passed_hours_since_the_beginning_of_year.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Frequency_of_characters.main" />
+        <module name="Recipes.Topics-LocalTime-Return_time_without_seconds.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Theory.test" />
+        <module name="Recipes.Topics-LocalDateTime-Subtracting_hours_and_adding_minutes.main" />
+        <module name="Recipes.Topics-The_utility_class_Collections-Sorting_sequences.main" />
+      </profile>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.20/18bcea7d5df4d49227b4a0743a536208ce4825bb/lombok-1.18.20.jar" />
+        </processorPath>
+        <module name="Recipes.Recipes-task.test" />
+        <module name="Recipes.Recipes-task.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="11" />
+  </component>
+</project>

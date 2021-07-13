@@ -1,0 +1,8 @@
+type: framework
+content:
+- First recipe
+- Multiple recipes
+- Store a recipe
+- Sort & update
+- More chefs to the table
+current_task: 4

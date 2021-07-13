@@ -1,0 +1,163 @@
+<h2>Description</h2>
+
+<p>Imagine a service that supports the registration process, can handle a lot of users, and each of them can add their own recipes. Also, a user can update or delete only their recipes but can view recipes added by other users. In this stage, you will implement all this functionality with Spring Boot Security.</p>
+
+<p>The stage is divided into 3 steps. In the first step, you need to add an endpoint responsible for the user registration. The endpoint receives 2 fields: <code class="language-java">email</code> and <code class="language-java">password</code>. The second step is to enable Spring Security and configure the access restrictions – only the registered users with the correct login and password should have the rights to use the service. After that, restrict the deletion and updating to the recipe author only.</p>
+
+<h2>Theory</h2>
+
+<p>Spring Security and similar technologies require a basic understanding of <strong>authentication </strong>and <strong>authorization</strong> features. If you're not familiar with these subjects, make a little research on your own before going on. You can take a look at the <a target="_blank" href="https://www.okta.com/identity-101/authentication-vs-authorization/" rel="noopener noreferrer nofollow">Authentication vs. Authorization</a> article by Okta or at the <a target="_blank" href="https://www.youtube.com/watch?v=I0poT4UxFxE&amp;list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE&amp;index=2" rel="noopener noreferrer nofollow">Five Spring Security Concepts</a> video by Java Brains. If your time runs shorts, here's a recap:</p>
+
+<ul>
+	<li>Authentication provides an answer to the following questions: "Is this a valid user?" "Is this user registered in our application?"</li>
+	<li>Authorization answers the following questions: "Is this (authenticated) user authorized to perform this action (access endpoint)?"</li>
+</ul>
+
+<p>To start working with the Spring Boot Security, we need to add the following dependency in the <code class="language-java">build.gradle</code> file:</p>
+
+<pre><code class="language-java">dependencies {
+   // ...
+   implementation 'org.springframework.boot:spring-boot-starter-security'
+   // ...
+}</code></pre>
+
+<p>Our endpoints are secured once we have added this dependency. To access them, we need to enter the correct login and password. You can try to access an endpoint via browser — you'll see a login form instead. What is the correct login and password? Why are we shown the login form? That's because Spring Boot applies a convention — when we add the dependency, it provides us with a configuration that simplifies the workflow.<br>
+By default, Spring Boot Security enables the basic authentication, adds its own login/logout, generates a default user with login "user" and password, which is shown in the console after we start the program, and provides us with other configurations. We can access the endpoints using the default login and password. Also, we can override them and specify our pair in the <code class="language-java">application.properties</code> file.</p>
+
+<p>But this is not enough. We need to allow users to create accounts with their own logins and passwords. To do that, we need to override the default behavior. There are many ways to configure Spring Security and add multi-user support, but the main part remains: we need to extend the configuration of the <code class="language-java">WebSecurityConfigurerAdapter</code> abstract class and override its methods. In our case, we need to override two methods under the same <code class="language-java">configure</code> name. We can configure <strong>authentication </strong>with the method that receives an <code class="language-java">AuthenticationManagerBuilder</code> object. <strong>Authorization</strong> can be configured with the method that receives an <code class="language-java">HttpSecurity</code> object. Both classes implement a builder pattern. We can specify the configurations with <strong>method chaining</strong>.</p>
+
+<p><button
+        class="btn-sm btn-outline-secondary"
+        onclick="getElementById('hint-3861').style.display='inline'">
+        Hint
+      </button>
+      <div id="hint-3861" style="display:none;">In this stage, HTTP Basic Authentication should be enabled. Spring Boot Security enables basic auth when we add the dependency. But when we override the <code class="language-java">configure(HttpSecurity http)</code> method, we override this default configuration. If we want to use basic auth, we need to enable it explicitly using the <code class="language-java">HttpSecurity</code> instance and its method.</div></p>
+
+<p>Here are the links about Spring Security that will help to complete this stage:</p>
+
+<ul>
+	<li><a target="_blank" href="https://www.youtube.com/watch?v=TNt3GHuayXs&amp;list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE&amp;index=12" rel="noopener noreferrer nofollow">Spring Boot + Spring Security with JPA authentication and MySQL from scratch</a> by Java Brains (a video)</li>
+	<li><a target="_blank" href="https://www.websparrow.org/spring/spring-boot-spring-security-with-jpa-authentication-and-mysql" rel="noopener noreferrer nofollow">Spring Boot + Spring Security with JPA authentication and MySQL</a> by Web Sparrow (an article)</li>
+</ul>
+
+<p>Both links above use MySQL database to store user credentials, but you can use a built-in H2 database to store the user info in the same way you store recipes. No MySQL knowledge is required, and in this stage, you'll need only one additional dependency mentioned above.</p>
+
+<p>One more thing. The last task requires you to get the information about the <strong>currently authenticated user</strong>. The <a target="_blank" href="https://www.baeldung.com/get-user-in-spring-security" rel="noopener noreferrer nofollow">Retrieve User Information in Spring Security</a> article by Baelung describes how to do that.</p>
+
+<p><div class="alert alert-primary">Interested to learn more on Spring Boot Security? The Java Brains <a target="_blank" href="https://www.youtube.com/watch?v=sm-8qfMWEV8&amp;list=PLqq-6Pq4lTTYTEooakHchTGglSvkZAjnE" rel="noopener noreferrer nofollow">video series</a> can help you with that.</div></p>
+
+<h2>Objectives</h2>
+
+<p>The service should contain all features from the previous stages. To complete the project, you need to add the following functionality:</p>
+
+<ul>
+	<li>New endpoint <code class="language-java">POST /api/register</code> receives a JSON object with two fields: <code class="language-java">email</code> (string), and <code class="language-java">password</code> (string). If a user with a specified email does not exist, the program saves (registers) the user in a database and responds with <code class="language-json">200 (Ok)</code>. If a user is already in the database, respond with the <code class="language-json">400 (Bad Request)</code> status code. Both fields are <strong>required</strong> and must be <strong>valid</strong>: <code class="language-java">email</code> should contain <code class="language-java">@</code> and <code class="language-java">.</code> symbols, <code class="language-java">password</code> should contain at least 8 characters and shoudn't be blank. If the fields do not meet these restrictions, the service should respond with <code class="language-json">400 (Bad Request)</code>. Also, do not forget to use an encoder before storing a password in a database. <code class="language-java">BCryptPasswordEncoder</code> is a good choice.</li>
+	<li>Include the Spring Boot Security dependency and configure access to the endpoints – all endpoints (except <code class="language-java">/api/register</code>) should be available only to the registered, authenticated, and authorized users. Otherwise, the server should respond with the <code class="language-json">401 (Unauthorized)</code> status code.</li>
+	<li>Add additional restrictions – only an author of a recipe can delete or update a recipe. If a user is not the author of a recipe, but they try to carry out the actions mentioned above, the service should respond with the <code class="language-json">403 (Forbidden)</code> status code.</li>
+</ul>
+
+<p><div class="alert alert-warning">For testing purposes, <code class="language-java">POST</code><code class="language-json">/actuator/shutdown</code> should be available without authentication.</div></p>
+
+<p>If you use Postman or any similar program for testing and receive <code class="language-java">403 (Forbidden)</code>, try to disable <strong>CSRF </strong>(Cross-Site Request Forgery) protection. You can disable this type of protection by calling the following methods – <code class="language-java">.csrf().disable()</code> on the <code class="language-java">HttpSecurity</code> instance that was obtained after overriding the <code class="language-java">configure</code> method.</p>
+
+<p>If you use the H2 console, you need to unblock it by disabling <strong>CSRF</strong> and <strong>X-Frame-Options </strong>that prevents clickjacking attacks, by calling the following methods: <code class="language-java">.csrf().disable().headers().frameOptions().disable()</code> on the <code class="language-java">HttpSecurity</code> instance. Also, make sure that Spring Security does not block the H2 console URLs.</p>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1: </strong><em><code class="language-java">POST /api/recipe/new</code> request without authentication</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Status code: <code class="language-json">401 (Unauthorized)</code></em></p>
+
+<p><strong>Example 2: </strong><em><code class="language-java">POST /api/register</code> request without authentication</em></p>
+
+<pre><code class="language-json">{
+   "email": "Cook_Programmer@somewhere.com",
+   "password": "RecipeInBinary"
+}</code></pre>
+
+<p><em>Status code: <code class="language-json">200 (Ok)</code></em></p>
+
+<p><em>Further <code class="language-java">POST /api/recipe/new</code> request with basic authentication; email (login): Cook_Programmer@somewhere.com, and password: RecipeInBinary</em></p>
+
+<pre><code class="language-json">{
+   "name": "Mint Tea",
+   "category": "beverage",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "id": 1
+}</code></pre>
+
+<p><em>Further <code class="language-java">PUT /api/recipe/1</code> request with basic authentication; email (login): Cook_Programmer@somewhere.com, password: RecipeInBinary</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Status code: <code class="language-json">204 (No Content)</code></em></p>
+
+<p><em>Further <code class="language-java">GET /api/recipe/1</code> request with basic authentication; email (login): Cook_Programmer@somewhere.com, password: RecipeInBinary</em></p>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "date": "2020-01-02T12:11:25.034734",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><strong>Example 3: </strong><em><code class="language-java">POST /api/register</code> request without authentication</em></p>
+
+<pre><code class="language-json">{
+   "email": "CamelCaseRecipe@somewhere.com",
+   "password": "C00k1es."
+}</code></pre>
+
+<p><em>Status code: <code class="language-json">200 (Ok)</code></em></p>
+
+<p><em>Further response for the <code class="language-java">GET /api/recipe/1</code> request with basic authentication; email (login): CamelCaseRecipe@somewhere.com, password: C00k1es.</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "date": "2020-01-02T12:11:25.034734",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Further <code class="language-java">PUT /api/recipe/1</code> request with basic authentication; email (login): CamelCaseRecipe@somewhere.com, password: C00k1es.</em></p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "category": "beverage",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<p><em>Status code: <code class="language-json">403 (Forbidden)</code></em></p>
+
+<p><em>Further <code class="language-java">DELETE /api/recipe/1</code> request with basic authentication; email (login): CamelCaseRecipe@somewhere.com, password: C00k1es.</em></p>
+
+<p><em>Status code: <code class="language-json">403 (Forbidden)</code></em></p>

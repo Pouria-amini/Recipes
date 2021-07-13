@@ -1,0 +1,173 @@
+<h2>Description</h2>
+
+<p>In this stage, we continue with improving our application. It would be good to retrieve all recipes related to a category (beverages, salads, desserts, and so on), to search for a recipe by name, to update a recipe, or to find out when a recipe was uploaded or updated. To do that, you need two additional fields: <code class="language-json">category</code> and <code class="language-json">date</code>. One field is a recipe category, the other field stores the date. You also need to add two new endpoints. One endpoint will update recipes, the other receives the query parameters that will allow searching for recipes by a category or name.</p>
+
+<h2>Objectives</h2>
+
+<p>Don't forget to keep the functionality from the previous stages. This is what your program can do:</p>
+
+<ul>
+    <li><code class="language-json">POST /api/recipe/new</code> receives a recipe as a JSON object and returns a JSON object with one <code class="language-json">id</code> field;</li>
+    <li><code class="language-json">GET /api/recipe/{id}</code> returns a recipe with a specified <code class="language-json">id</code><em> </em>as a JSON object;</li>
+    <li><code class="language-json">DELETE /api/recipe/{id}</code> deletes a recipe with a specified <code class="language-json">id</code>.</li>
+</ul>
+
+<p>In this stage, the recipe structure should contain two new fields:</p>
+
+<ul>
+    <li><code class="language-json">category</code> represents a category of a recipe. The field has the same restrictions as <code class="language-json">name</code> and <code class="language-json">description</code>. It shouldn't be blank;</li>
+    <li><code class="language-json">date</code> stores the date when the recipe has been added (or the last update). You can use any date/time format, for example <code class="language-json">2021-09-05T18:34:48.227624</code> (the default <code class="language-json">LocalDateTime</code> format), but the field should have at least 8 characters.</li>
+</ul>
+
+<p>Also, the service should support the following endpoints:</p>
+
+<ul>
+    <li><code class="language-json">PUT /api/recipe/{id}</code> receives a recipe as a JSON object and updates a recipe with a specified <code class="language-json">id</code><em>. </em>Also, update the <code class="language-json">date</code> field too. The server should return the <code class="language-json">204 (No Content)</code> status code. If a recipe with a specified <code class="language-json">id</code> does not exist, the server should return <code class="language-json">404 (Not found)</code>. The server should respond with <code class="language-json">400 (Bad Request)</code> if a recipe doesn't follow the restrictions indicated above (all fields are required, string fields can't be blank, arrays should have at least one item);</li>
+    <li><code class="language-json">GET /api/recipe/search</code> takes one of the two mutually exclusive query parameters:
+        <ol>
+            <li><code class="language-json">category</code> – if this parameter is specified, it returns a JSON array of all recipes of the specified category. Search is case-insensitive, sort the recipes by date (newer first);</li>
+            <li><code class="language-json">name</code> – if this parameter is specified, it returns a JSON array of all recipes with the names that <strong>contain</strong> the specified parameter. Search is case-insensitive, sort the recipes by date (newer first). </li>
+        </ol>
+
+        <p>If no recipes are found, the program should return an empty JSON array. If 0 parameters were passed, or more than 1, the server should return <code class="language-json">400 (Bad Request)</code>. The same response should follow if the specified parameters are not valid. If everything is correct, it should return <code class="language-json">200 (Ok)</code>.</p>
+    </li>
+</ul>
+
+<p>There is a couple of ways to do that. Check the examples below for details. If you need more theory on how to get data from a database or how to process query parameters, take a look at <a target="_blank" href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods" rel="noopener noreferrer nofollow">Query Methods</a> paragraph in the Official Documentation (check the table), or the <code class="language-json">@RequestParam</code> <a target="_blank" href="https://www.baeldung.com/spring-request-param" rel="noopener noreferrer nofollow">annotation</a>.</p>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1: </strong><em><code class="language-json">POST /api/recipe/new</code> request</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "id": 1
+}</code></pre>
+
+<p><em>Further <code class="language-json">GET /api/recipe/1</code> response</em>:</p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "date": "2020-01-02T12:11:25.034734",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><button
+        class="btn-sm btn-outline-secondary"
+        onclick="getElementById('hint-5074').style.display='inline'">
+        Hint
+      </button>
+      <div id="hint-5074" style="display:none;">The <code class="language-json">date</code> field is present in the response only.</div></p>
+
+<p><strong>Example 2</strong>: <em><code class="language-json">PUT /api/recipe/1</code> request</em></p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "category": "beverage",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<p><em>Further response for the <code class="language-json">GET /api/recipe/1</code> request:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "category": "beverage",
+   "date": "2021-04-06T14:10:54.009725",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<p><strong>Example 3</strong>: <em>A database with several recipes</em></p>
+
+<pre><code class="language-json">{
+   "name": "Iced Tea Without Sugar",
+   "category": "beverage",
+   "date": "2019-07-06T17:12:32.546987",
+   ....
+},
+{
+   "name": "vegan avocado ice cream",
+   "category": "DESSERT",
+   "date": "2020-01-06T13:10:53.011342",
+   ....
+},
+{
+   "name": "Fresh Mint Tea",
+   "category": "beverage",
+   "date": "2021-09-06T14:11:51.006787",
+   ....
+},
+{
+   "name": "Vegan Chocolate Ice Cream",
+   "category": "dessert",
+   "date": "2021-04-06T14:10:54.009345",
+   ....
+},
+{
+   "name": "warming ginger tea",
+   "category": "beverage",
+   "date": "2020-08-06T14:11:42.456321",
+   ....
+}</code></pre>
+
+<p><em>Response for the <code class="language-json">GET /api/recipe/search/?category=dessert</code> request:</em></p>
+
+<pre><code class="language-json">[
+   {
+      "name": "Vegan Chocolate Ice Cream",
+      "category": "dessert",
+      "date": "2021-04-06T14:10:54.009345",
+      ....
+   },
+   {
+      "name": "vegan avocado ice cream",
+      "category": "DESSERT",
+      "date": "2020-01-06T13:10:53.011342",
+      ....
+   },
+]</code></pre>
+
+<p><em>Response for the <code class="language-json">GET /api/recipe/search/?name=tea</code> request:</em></p>
+
+<pre><code class="language-json">[
+   {
+      "name": "Fresh Mint Tea",
+      "category": "beverage",
+      "date": "2021-09-06T14:11:51.006787",
+      ....
+   },
+   {
+      "name": "warming ginger tea",
+      "category": "beverage",
+      "date": "2020-08-06T14:11:42.456321",
+      ....
+   },
+   {
+      "name": "Iced Tea Without Sugar",
+      "category": "beverage",
+      "date": "2019-07-06T17:12:32.546987",
+      ....
+   },
+]</code></pre>
+
+<p><button
+        class="btn-sm btn-outline-secondary"
+        onclick="getElementById('hint-7966').style.display='inline'">
+        Hint
+      </button>
+      <div id="hint-7966" style="display:none;">Search is case-insensitive, the recipes are sorted by date.</div></p>

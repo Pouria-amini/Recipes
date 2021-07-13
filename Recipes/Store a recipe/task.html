@@ -1,0 +1,70 @@
+<h2>Description</h2>
+
+<p>In the previous stage, we have improved our service, so it can handle a lot of recipes. But when we close our program, it deletes all recipes. In this stage, you'll implement one of the main features of the service – connect the service to a database and store the recipes there. No more lost recipes!</p>
+
+<p>You will also need a new endpoint that will allow deleting a recipe by the recipe <code class="language-java">id</code>. Make sure that the service accepts only valid recipes – recipes without directions or ingredients are frustrating. We won't change the recipe structure in this stage.</p>
+
+<h2>Objectives</h2>
+
+<p>First of all, include all necessary dependencies and configurations in the <code class="language-java">build.gradle</code> and <code class="language-java">application.properties</code> files.</p>
+
+<p>For testing reasons, the <code class="language-java">application.properties</code> file should contain the following line with the database name:</p>
+
+<pre><code class="language-java">spring.datasource.url=jdbc:h2:file:../recipes_db</code></pre>
+
+<p>The service should support the same endpoints as in the previous stage:</p>
+
+<ul>
+    <li><code class="language-java">POST /api/recipe/new</code> receives a recipe as a JSON object and returns a JSON object with one <code class="language-java">id</code> field;</li>
+    <li><code class="language-java">GET /api/recipe/{id}</code> returns a recipe with a specified <code class="language-java">id</code><em> </em>as a JSON object.</li>
+</ul>
+
+<p>To complete the stage you need to add the following functionality:</p>
+
+<ul>
+    <li>Store all recipes permanently in a database: after a server restart, all added recipes should be available to a user;</li>
+    <li>Implement a new <code class="language-java">DELETE /api/recipe/{id}</code> endpoint. It deletes a recipe with a specified <code class="language-java">{id}</code>. The server should respond with the <code class="language-json">204 (No Content)</code> status code. If a recipe with a specified id does not exist, the server should return <code class="language-json">404 (Not found)</code>;</li>
+    <li>The service should accept only valid recipes – all fields are obligatory, <code class="language-java">name</code> and <code class="language-java">description</code> shouldn't be blank, and JSON arrays should contain at least one item. If a recipe doesn't meet these requirements, the service should respond with the <code class="language-json">400 (Bad Request)</code> status code.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1: </strong><em><code class="language-java">POST /api/recipe/new</code> request</em></p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "id": 1
+}</code></pre>
+
+<p><strong>Example 2: </strong><em>Response for the</em><strong> </strong><em><code class="language-java">GET /api/recipe/1</code> request</em></p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<p><strong>Example 3: </strong></p>
+
+<p><em><code class="language-java">DELETE /api/recipe/1</code> request</em></p>
+
+<p><em>Status code: <code class="language-json">204 (No Content)</code></em></p>
+
+<p><em><code class="language-java">DELETE /api/recipe/1</code> request</em></p>
+
+<p><em>Status code: <code class="language-json">404 (Not found)</code></em></p>
+
+<p><strong>Example 4:</strong></p>
+
+<p><em><code class="language-java">GET /api/recipe/1</code> request</em></p>
+
+<p><em>Status code: <code class="language-json">404 (Not found)</code></em></p>

@@ -1,0 +1,53 @@
+<h2>Description</h2>
+
+<p>Our service can store only one recipe at a time which is not very convenient. In this stage, improve the service to store a lot of recipes and access recipes by a unique <code class="language-json">id</code>. Some changes in the recipe structure are also required.</p>
+
+<p>The new structure of a recipe includes the same 4 fields, but the type of two of them is different. <code class="language-json">ingredients</code> and <code class="language-json">directions</code> should now be arrays. Here's an example of the new structure:</p>
+
+<pre><code class="language-json">{
+   "name": "Warming Ginger Tea",
+   "description": "Ginger tea is a warming drink for cool weather, ...",
+   "ingredients": ["1 inch ginger root, minced", "1/2 lemon, juiced", "1/2 teaspoon manuka honey"],
+   "directions": ["Place all ingredients in a mug and fill with warm water (not too hot so you keep the beneficial honey compounds in tact)", "Steep for 5-10 minutes", "Drink and enjoy"]
+}</code></pre>
+
+<h2>Objectives</h2>
+
+<p>Rearrange the existing endpoints; the service should support the following:</p>
+
+<ul>
+	<li><code class="language-json">POST /api/recipe/new</code> receives a recipe as a JSON object and returns a JSON object with one <code class="language-json">id</code> field. This is a uniquely generated number by which we can identify and retrieve a recipe later. The status code should be <code class="language-json">200 (Ok)</code>.</li>
+	<li><code class="language-json">GET /api/recipe/{id}</code> returns a recipe with a specified <code class="language-json">id</code> as a JSON object (where <code class="language-json">{id}</code> is the <code class="language-json">id</code> of a recipe). The server should respond with the <code class="language-json">200 (Ok)</code> status code. If a recipe with a specified <code class="language-json">id</code> does not exist, the server should respond with <code class="language-json">404 (Not found)</code>.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1</strong>: <em><code class="language-json">POST /api/recipe/new</code> request with the following body:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "id": 1
+}</code></pre>
+
+<p><strong>Example 2</strong>: <em><code class="language-json">GET /api/recipe/1</code> request</em></p>
+
+<p><em>Response:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": ["boiled water", "honey", "fresh mint leaves"],
+   "directions": ["Boil water", "Pour boiling hot water into a mug", "Add fresh mint leaves", "Mix and let the mint leaves seep for 3-5 minutes", "Add honey and mix again"]
+}</code></pre>
+
+<p><strong>Example</strong><strong> 3</strong>: <em><code class="language-json">GET /api/recipe/999</code> request</em></p>
+
+<p><em>Status code: <code class="language-json">404 (Not found)</code></em></p>

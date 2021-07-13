@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-LocalTime-Some_hours_and_minutes_ago" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/LocalTime/Some hours and minutes ago" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Recipes" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/LocalTime/Some hours and minutes ago">
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalTime/Some hours and minutes ago/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalTime/Some hours and minutes ago/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/LocalTime/Some hours and minutes ago/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

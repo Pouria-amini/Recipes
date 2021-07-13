@@ -1,0 +1,62 @@
+<h2>Description</h2>
+
+<p>We all were in a situation when we wanted to cook something special but couldn't remember a recipe. Let's create a program that can store all recipes in one place. The program is a multi-user web service based on Spring Boot that allows storing, retrieving, updating, and deleting recipes.</p>
+
+<p>In the first stage, you'll implement a simple service that supports two operations: adding (<code class="language-json">POST /api/recipe</code>), and retrieving (<code class="language-json">GET /api/recipe</code>) a recipe. The service will be able to store only one recipe at a time. Every new recipe added via <code class="language-json">POST</code> request will override the previous one. We will improve the service to support multiple recipes in the stages to come.</p>
+
+<p>A recipe includes 4 fields: <code class="language-json">name</code> , <code class="language-json">description</code>, <code class="language-json">ingredients</code>, <code class="language-json">directions</code>. Here's an example of the <code class="language-json">Fresh Mint Tea</code> recipe:</p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": "boiled water, honey, fresh mint leaves",
+   "directions": "1) Boil water. 2) Pour boiling hot water into a mug. 3) Add fresh mint leaves. 4) Mix and let the mint leaves seep for 3-5 minutes. 5) Add honey and mix again."
+}</code></pre>
+
+<h2>Theory</h2>
+
+<p>With Spring Boot, we need to write data classes with a lot of getters, setters, and constructors; having a readable <code class="language-json">toString</code> is also a good idea. Getters and setters are often simple, they return or store a value. Manually writing these methods may be tedious and lead to errors. To simplify this process, we can use a very simple but powerful <a target="_blank" href="https://projectlombok.org/features/all" rel="noopener noreferrer nofollow">Project Lombok</a> library. It can generate all these methods during compilation and reduces the number of lines and bugs. It also improves code readability and maintainability. Take a look at the example below:</p>
+
+<pre><code class="language-java">@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Animal {
+   String name;
+   int age;
+   int weight;
+}</code></pre>
+
+<p><code class="language-json">@Data</code> annotation automatically generates getters (for all fields), setters (for all non-final fields), <code class="language-json">hashCode</code>, <code class="language-json">equals</code>, and a readable <code class="language-json">toString</code> method. Second and third annotation generates constructors. The annotations can be different — if you want to know more about this library, take a look at the link above. The library is already imported; feel free to use this library not only with Spring Boot but also with any other Java program.</p>
+
+<p>The tests won't check whether you use Project Lombok or not.</p>
+
+<h2>Objectives</h2>
+
+<p>Implement two endpoints:</p>
+
+<ul>
+	<li><code class="language-json">POST /api/recipe</code> receives a recipe as a JSON object and overrides the current recipe.</li>
+	<li><code class="language-json">GET /api/recipe</code> returns the current recipe as a JSON object.</li>
+</ul>
+
+<p>The initial recipe can have any form.</p>
+
+<h2>Examples</h2>
+
+<p><strong>Example 1: </strong><em><code class="language-json">POST /api/recipe</code> request with the following body:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": "boiled water, honey, fresh mint leaves",
+   "directions": "1) Boil water. 2) Pour boiling hot water into a mug. 3) Add fresh mint leaves. 4) Mix and let the mint leaves seep for 3-5 minutes. 5) Add honey and mix again."
+}</code></pre>
+
+<p><strong>Example 2: </strong><em>Response for a <code class="language-json">GET /api/recipe</code> request:</em></p>
+
+<pre><code class="language-json">{
+   "name": "Fresh Mint Tea",
+   "description": "Light, aromatic and refreshing beverage, ...",
+   "ingredients": "boiled water, honey, fresh mint leaves",
+   "directions": "1) Boil water. 2) Pour boiling hot water into a mug. 3) Add fresh mint leaves. 4) Mix and let the mint leaves seep for 3-5 minutes. 5) Add honey and mix again."
+}</code></pre>
